@@ -18,15 +18,29 @@
         autofocus
         placeholder="이름"
       />
-      <button class="btn-success" type="submit">Search</button>
+      <form style="margin-left: 2%;" type="submit" @submit.prevent="searchUserList">
+        <button class="btn-success" type="submit">Search</button>
+      </form>
       <!-- <p class="loading" v-if="loading">검색 중입니다...</p> -->
     </div>
-    <div class="table">
-        <div v-for="user in userList" :key="user.id">
-            <span style="border: 1px solid #cdd2d4;"> {{ user.id }}</span>
-            <span style="border: 1px solid #cdd2d4;"> {{ user.name }}</span>
-        </div>
-    </div>
+    <table class="table">
+      <tr>
+        <td class="table-section">아이디</td>
+        <td class="table-section">이름</td>
+        <td class="table-section">파</td>
+        <td class="table-section">나이</td>
+        <td class="table-section">이메일</td>
+        <td class="table-section">생성일자</td>
+      </tr>
+      <tr v-for="user in userList" :key="user.id">
+        <td class="table-section">{{user.userid}}</td>
+        <td class="table-section">{{user.name}}</td>
+        <td class="table-section">{{user.role}}</td>
+        <td class="table-section">{{user.age}}</td>
+        <td class="table-section">{{user.email}}</td>
+        <td class="table-section">{{user.createdAt}}</td>
+      </tr>
+    </table>
   </div>
 </template>
 
@@ -38,6 +52,7 @@ export default {
         { key: "id", label: "id" },
         { key: "name", label: "이름" },
         { key: "userid", label: "아이디" },
+        { key: "age", label: "나이" },
         { key: "role", label: "권한" },
         { key: "email", label: "이메일" },
         { key: "createdAt", label: "생성일" }
@@ -58,7 +73,7 @@ export default {
   },
   methods: {
     searchUserList() {
-      this.$store.dispatch('actUserList', this.search)
+      this.$store.dispatch('actUserList', this.Search)
     },
   }
 };
