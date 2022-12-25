@@ -18,10 +18,12 @@ export default {
   state: {
     UserList: [],
     User: { ...stateInit.User },
+    SignUpResult: null,
   },
   getters: {
     UserList: state => state.UserList,
     User: state => state.User,
+    SignUpResult: state => state.SignUpResult,
   },
   mutations: {
     setUserList(state, data) {
@@ -30,6 +32,9 @@ export default {
     },
     setUser(state, data) {
       state.User = data
+    },
+    setSignUpResult(state, data) {
+      state.SignUpResult = data
     },
   },
   actions: {
@@ -46,6 +51,24 @@ export default {
           // 에러인 경우 처리
           console.error('UserList.error', error)
           context.commit('setUserList', [])
+        })
+    },
+
+    // 로그인페이지에서 회원가입
+    actUserSignUp(context, payload) {
+      context.commit('setSignUpResult', null)
+
+      /* RestAPI 호출 */
+      api
+        .post('/serverApi/users', payload)
+        .then(response => {
+          const SignUpResult = response && response.data && response.data.id
+          context.commit('setSignUpResult', SignUpResult)
+        })
+        .catch(error => {
+          // 에러인 경우 처리
+          console.error('UserSignUp.error', error)
+          context.commit('setSignUpResult', -1)
         })
     },
   }
