@@ -43,28 +43,31 @@
           placeholder="eg. 15, 21, 27"
         />
         <label for="role">파</label>
-        <input
-          class="form-control"
-          type="text"
-          v-model="role"
-          placeholder="eg. 강아지, 고양이"
-        />
+        <select class="form-control" v-model="role">
+          <option value="강아지">Dog</option>
+          <option value="고양이">Cat</option>
+        </select>
       </form>
     </div>
     <div slot="footer">
-      <div style="display: flex; justify-content:space-between;">
-      <button
-        class="btn"
-        :class="{ 'btn-success': valid }"
-        type="submit"
-        form="sign-up"
-        :disabled="!valid"
-      >
-        회원가입
-      </button>
-      <button class="btn" style="background-color: tomato;" @click.prevent="$emit('close')">
-        close
-      </button></div>
+      <div style="display: flex; justify-content: space-between">
+        <button
+          class="btn"
+          :class="{ 'btn-success': valid }"
+          type="submit"
+          form="sign-up"
+          :disabled="!valid"
+        >
+          회원가입
+        </button>
+        <button
+          class="btn"
+          style="background-color: tomato"
+          @click.prevent="$emit('close')"
+        >
+          close
+        </button>
+      </div>
     </div>
   </Modal>
 </template>
@@ -79,8 +82,8 @@ export default {
       name: "",
       password: "",
       email: "",
-      age: 0,
-      role: "강아지",
+      age: null,
+      role: "",
       valid: false,
     };
   },
@@ -122,7 +125,7 @@ export default {
     SignUpResult(value) {
       if (value !== null) {
         setTimeout(() => {
-          this.$router.push("/auth/login");
+          this.$emit("close");
         }, 300);
         if (value > 0) {
           // 메세지 출력
