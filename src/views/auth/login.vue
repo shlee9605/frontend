@@ -12,29 +12,29 @@
         <input class="form-control" type="password" 
           v-model="password" placeholder="비밀번호" />
       </div>
-      <button  class="btn" :class="{'btn-success': !invalidForm}" type="submit" 
+      <div class="button-align">
+      <button class="btn" :class="{'btn-success': !invalidForm}" type="submit" 
       :disabled="invalidForm">Log In</button>
+      <div v-if="signup">
+        <Signup @close="signup=false"/>
+      </div>
+      <div v-else>
+        <button class="signup-btn" @click.prevent="signup=true">
+          회원가입
+        </button>
+      </div>
+    </div>
     </form>
     <p class="loading" v-if="loading">로그인 중입니다...</p>
-    <div v-if="signup">
-      <Signup/>
-    </div>
-    <div v-else>
-      <a href="" @click.prevent="signup=true">회원가입</a>
-    </div>
-    <!-- <button @click="onClickAddNew">
-      회원가입
-    </button> -->
   </div>
 </template>
 
 <script>
 import jwtDecode from "jwt-decode";
-import Modal from '@/components/layout/Modal.vue';
 import Signup from '@/components/Signup.vue';
 
 export default {
-  components: { Modal, Signup },
+  components: { Signup },
   data() {
     return {
       signup: false,

@@ -27,7 +27,6 @@ export default {
   },
   mutations: {
     setUserList(state, data) {
-      console.log(data)
       state.UserList = data
     },
     setUser(state, data) {
