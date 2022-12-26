@@ -52,6 +52,7 @@
       </form>
     </div>
     <div slot="footer">
+      <div style="display: flex; justify-content:space-between;">
       <button
         class="btn"
         :class="{ 'btn-success': valid }"
@@ -61,6 +62,9 @@
       >
         회원가입
       </button>
+      <button class="btn" style="background-color: tomato;" @click.prevent="$emit('close')">
+        close
+      </button></div>
     </div>
   </Modal>
 </template>
@@ -85,8 +89,11 @@ export default {
       return this.$store.getters.SignUpResult;
     },
   },
+  mounted() {
+    this.setupClickOutside(this.$el);
+  },
   methods: {
-    SignUp(){
+    SignUp() {
       this.$store.dispatch("actUserSignUp", {
         name: this.name,
         userid: this.userid,
@@ -95,7 +102,18 @@ export default {
         age: this.age,
         role: this.role,
       });
-    }
+    },
+    setupClickOutside(el) {
+      document.querySelector("body").addEventListener("click", (e) => {
+        if (document.querySelector(".modal-container")) {
+          if (document.querySelector(".modal-container").contains(e.target))
+            return;
+          else if (el.contains(e.target)) {
+            this.$emit("close");
+          }
+        }
+      });
+    },
   },
   watch: {
     userid(v) {
