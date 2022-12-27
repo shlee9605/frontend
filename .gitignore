@@ -8,6 +8,7 @@ node_modules
 .env.local
 .env.*.local
 docker-compose.yml
+nginx-default.conf
 
 # Log files
 npm-debug.log*
